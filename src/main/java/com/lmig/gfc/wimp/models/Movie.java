@@ -1,27 +1,30 @@
 package com.lmig.gfc.wimp.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Movie {
-
-	// id marked as the primary key column of the database
-	// String "title" 300 that cannot be null
-	// Date "releaseDate" that can be null
-	// Long "budget" that can be null
-	// String "distributor" 500 that cannot be null
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO) // to create the unique ID
 	private Long id;
 
 	@Column(length = 300, nullable = false)
+
+	@JsonIgnore
+	@ManyToMany(mappedBy = "movies")
+	private List<Actor> actors;
+
 	private String title;
 
 	private Date releaseDate;
@@ -34,8 +37,7 @@ public class Movie {
 	public Movie() {
 	}
 
-	public Movie(Long id, String title, Date releaseDate, Long budget, String distributor) {
-		this.id = id;
+	public Movie(String title, Date releaseDate, Long budget, String distributor) {
 		this.title = title;
 		this.releaseDate = releaseDate;
 		this.budget = budget;
@@ -80,5 +82,13 @@ public class Movie {
 
 	public void setDistributor(String distributor) {
 		this.distributor = distributor;
+	}
+
+	public List<Actor> getActors() {
+		return actors;
+	}
+
+	public void setActors(List<Actor> actors) {
+		this.actors = actors;
 	}
 }

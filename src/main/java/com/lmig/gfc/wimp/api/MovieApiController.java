@@ -1,5 +1,6 @@
 package com.lmig.gfc.wimp.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -26,9 +27,19 @@ public class MovieApiController {
 		this.movieRepository = movieRepository;
 	}
 
+	// @GetMapping("")
+	// public List<Movie> getAll() {
+	// return movieRepository.findAll();
+	// }
+
 	@GetMapping("")
-	public List<Movie> getAll() {
-		return movieRepository.findAll();
+	public List<MovieView> getAll() {
+		List<Movie> movies = movieRepository.findAll();
+		ArrayList<MovieView> movieViews = new ArrayList<MovieView>();
+		for (Movie movie : movies) {
+			movieViews.add(new MovieView(movie));
+		}
+		return movieViews;
 	}
 
 	@GetMapping("{id}")

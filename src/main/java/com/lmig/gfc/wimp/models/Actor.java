@@ -1,25 +1,28 @@
 package com.lmig.gfc.wimp.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Actor {
 
-	// id marked as the primary key column of the database
-	// String "firstName" 75 characters that cannot be nullable
-	// String "lastName" 75 characters that can be nullable
-	// Long "activeSinceYear" that can be nullable
-	// Date "birthDate" that can be nullable
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
+	@ManyToMany
+	private List<Movie> movies;
+
+	@OneToMany(mappedBy = "actor")
+	private List<Award> awards;
 
 	@Column(length = 75, nullable = false)
 	private String firstName;
@@ -33,8 +36,7 @@ public class Actor {
 	public Actor() {
 	}
 
-	public Actor(Long id, String firstName, String lastName, Long activeSinceYear, Date birthDate) {
-		this.id = id;
+	public Actor(String firstName, String lastName, Long activeSinceYear, Date birthDate) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.activeSinceYear = activeSinceYear;
@@ -79,5 +81,21 @@ public class Actor {
 
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
+	}
+
+	public List<Movie> getMovies() {
+		return movies;
+	}
+
+	public void setMovies(List<Movie> movies) {
+		this.movies = movies;
+	}
+
+	public List<Award> getAwards() {
+		return awards;
+	}
+
+	public void setAwards(List<Award> awards) {
+		this.awards = awards;
 	}
 }
