@@ -37,6 +37,10 @@ public class MovieApiControllerTests {
 		// Asset
 		assertThat(actual).hasSize(movies.size());
 		verify(repo).findAll();
+		// trying to test the loop
+		// for (int i = 0; i < movies.size(); i = i + 1) {
+		// assertThat(movies.get(i)).isSameAs(actual.get(i).nnnnn);
+		// }
 	}
 
 	@Test // get one for a valid id
